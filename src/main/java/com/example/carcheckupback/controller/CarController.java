@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class CarController {
@@ -28,7 +30,30 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
 
-    // 추가적인 API 엔드포인트 구현 예시
+    @GetMapping("/manufacturers/{manufacturerId}/cars")
+    public ResponseEntity<List<Car>> getCarsByManufacturer(@PathVariable Long manufacturerId) {
+        logger.debug("Fetching cars for manufacturer with id: {}", manufacturerId);
+        List<Car> cars = carService.getCarsByManufacturer(manufacturerId);
+        return ResponseEntity.ok(cars);
+    }
+
+    @GetMapping("/manufacturers/{manufacturerId}/categories")
+    public ResponseEntity<List<String>> getCategoriesByManufacturer(@PathVariable Long manufacturerId) {
+        logger.debug("Fetching categories for manufacturer with id: {}", manufacturerId);
+        List<String> categories = carService.getCategoriesByManufacturer(manufacturerId);
+        return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/manufacturers/{manufacturerId}/categories/{category}/cars")
+    public ResponseEntity<List<Car>> getCarsByManufacturerAndCategory(
+            @PathVariable Long manufacturerId,
+            @PathVariable String category) {
+        logger.debug("Fetching cars for manufacturer with id: {} and category: {}", manufacturerId, category);
+        List<Car> cars = carService.getCarsByManufacturerAndCategory(manufacturerId, category);
+        return ResponseEntity.ok(cars);
+    }
+
+    // 기존 API 엔드포인트들
     @PostMapping("/car")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> createCar(@RequestBody Car car) {

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.carcheckupback.mapper.CarMapper">
@@ -10,9 +9,52 @@
             MAKE,
             CAR_YEAR,
             MODEL,
-            CREATE_DATE
+            CREATE_DATE,
+            CATEGORY,
+            MANUFACTURER_ID,
+            IMAGE_URL
         FROM CARS
-        WHERE ID = #{id}  <!-- 대문자로 변경 -->
+        WHERE ID = #{id}
+    </select>
+
+    <select id="getCarsByManufacturer" parameterType="java.lang.Long" resultType="com.example.carcheckupback.model.Car">
+        SELECT
+            ID,
+            STATUS,
+            MAKE,
+            CAR_YEAR,
+            MODEL,
+            CREATE_DATE,
+            CATEGORY,
+            MANUFACTURER_ID,
+            IMAGE_URL
+        FROM CARS
+        WHERE MANUFACTURER_ID = #{manufacturerId}
+        ORDER BY CATEGORY, MODEL
+    </select>
+
+    <select id="getCategoriesByManufacturer" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT DISTINCT CATEGORY
+        FROM CARS
+        WHERE MANUFACTURER_ID = #{manufacturerId}
+          AND CATEGORY IS NOT NULL
+        ORDER BY CATEGORY
+    </select>
+
+    <select id="getCarsByManufacturerAndCategory" resultType="com.example.carcheckupback.model.Car">
+        SELECT
+            ID,
+            STATUS,
+            MAKE,
+            CAR_YEAR,
+            MODEL,
+            CREATE_DATE,
+            CATEGORY,
+            MANUFACTURER_ID,
+            IMAGE_URL
+        FROM CARS
+        WHERE MANUFACTURER_ID = #{manufacturerId}
+          AND CATEGORY = #{category}
+        ORDER BY MODEL
     </select>
 </mapper>
-

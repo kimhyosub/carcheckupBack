@@ -12,6 +12,9 @@ public class Car {
     private int carYear;
     private String status;
     private String createDate;
+    private String category; // SEDAN, SUV, ELECTRIC, etc.
+    private Long manufacturerId;
+    private String imageUrl;
 
     @Override
     public String toString() {
@@ -22,6 +25,9 @@ public class Car {
                 ", carYear=" + carYear +
                 ", status='" + status + '\'' +
                 ", createDate='" + createDate + '\'' +
+                ", category='" + category + '\'' +
+                ", manufacturerId=" + manufacturerId +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }
